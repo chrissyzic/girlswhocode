@@ -14,6 +14,7 @@ show(pic)
 
 pixel_list = getPixels(pic)
 
+#I want to edit these grey values, too much dark blue/red
 for spot in pixel_list:
     grey_val = (getRed(spot) + getGreen(spot) + getBlue(spot)) / 3
     if grey_val > 180:
