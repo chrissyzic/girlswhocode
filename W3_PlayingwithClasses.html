@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<script src="processing-1.4.1.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+			void setup(){
+				paddle = new Paddle(100,10,[200,75,20]);
+				size(500,500);
+				background(0,0,250);
+			}
+			
+			void draw(){
+				paddle.drawPaddle
+			}
+			
+			class Paddle{
+			
+				//attributes
+				var red_value;
+				var green_value;
+				var blue_value;
+				var height;
+				var width;
+				var x_position;
+				var y_position;
+				
+				Paddle(w,h,color){
+					width = w;
+					height = h;
+					red_value = color[0];
+					green_value = color[1];
+					blue_value = color[2];
+					x_position = mouseX;
+					y position = 200;
+				}
+					
+				void drawPaddle(){
+					fill(red_value, green_value, blue_value);
+					rectangle[x_position, y_position, width, height];
+				}
+				
+			}	
+			
+			void draw(){  
+			  //text("Hello Web!",20,20);
+			  println("Hello ErrorLog!");
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
