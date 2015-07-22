@@ -1,0 +1,107 @@
+<html>
+	<head>
+		<title>GWC Graphics and Animation Week!</title>
+		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+		var ball;
+		var paddle;
+		void setup()
+		{
+			ball = new Ball(30,[255,255,255],300,300,2,2);
+			paddle = new Paddle (100,10,[200,75,20]);
+			size(800,600);
+			background(17,9,89);
+		}
+
+		void draw(){  
+			background(17,9,89);
+			ball.drawBall();
+			paddle.drawPaddle();
+			ball.move();
+		}
+		
+		class Ball {
+			var xPosition;
+			var yPosition;
+			var size;
+			var r;
+			var g;
+			var b;
+			var speedX;
+			var speedY;
+			
+			Ball(s, color, x, y, xSpeed, ySpeed){
+				xPosition = x;
+				yPosition = y;
+				r = color[0];
+				g = color[1];
+				b = color[2];
+				size = s;
+				speedX = xSpeed;
+				speedY = ySpeed;
+			}
+			
+			void drawBall(){
+				noStroke();
+				fill(r,g,b);
+				ellipse(xPosition, yPosition, size, size);
+			}
+			
+			void move(speed){
+				xPosition -= speedX;
+				yPosition -= speedY;
+				
+				//touching a wall?
+				if(xPosition < size/2 || xPosition > (800-(size/2))){
+					speedX = speedX * -1;
+				}
+				
+				if(yPosition < size/2 || yPosition > (600-(size/2))){
+					speedY = speedY * -1;
+				}
+				
+				//touching the paddle?
+				if(xPosition >= paddle.xPos && xPosition <= paddle.xPos + paddle.width){
+					if(yPosition >= paddle.yPos && yPosition <= paddle.yPos + paddle.height){
+						//speedX = speedX * -1;
+						speedY = speedY * -1;
+					}
+				}
+				
+			}
+			
+		}
+		
+		class Paddle {
+			var width;
+			var height;
+			var r;
+			var g;
+			var b;
+			var xPos;
+			var yPos;
+			
+			Paddle(w,h,color){
+				width = w;
+				height = h;
+				r = color[0];
+				g = color[1];
+				b = color[2];
+				xPos = mouseX;
+				yPos = 500;
+			}
+			
+			void drawPaddle(){
+				noStroke();
+				fill(r,g,b);
+				xPos = mouseX;
+				rect(xPos, yPos, width, height);
+			}
+			
+		}
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
