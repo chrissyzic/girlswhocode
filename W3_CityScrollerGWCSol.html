@@ -1,0 +1,123 @@
+<html>
+	<head>
+		<title>GWC Graphics and Animation Week!</title>
+		<script src="http://cloud.github.com/downloads/processing-js/processing-js/processing-1.4.1.min.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+		var frontScroller;
+		var middleScroller;
+		var backScroller;
+		void setup()
+		{
+			size(800,600);
+			background(17,9,89);
+			frontScroller = new Scroller(800,200,600,4,[0,0,30]);
+			middleScroller = new Scroller(800,150,500,1,[30,30,100]);
+			backScroller = new Scroller(800,20,450,.5,[50,50,150]);
+		}
+
+		void draw(){  
+			background(17,9,89);
+		
+			backScroller.drawBuildings();
+			backScroller.moveBuildings();
+			
+			middleScroller.drawBuildings();
+			middleScroller.moveBuildings();
+			
+			frontScroller.drawBuildings();
+			frontScroller.moveBuildings();
+		}
+		
+		class Building {
+			var xPosition;
+			var yPosition;
+			var height;
+			var width;
+			var r;
+			var g;
+			var b;
+			
+			Building(bWidth,bHeight, color, x, y){
+				xPosition = x;
+				yPosition = y;
+				r = color[0];
+				g = color[1];
+				b = color[2];
+				width = bWidth;
+				height = bHeight;
+			}
+			
+			void drawBuilding(){
+				noStroke();
+				fill(r,g,b);
+				rect(xPosition, yPosition, width, height);
+			}
+			
+			void move(speed){
+				xPosition -= speed;
+			}
+		}
+		
+		class Scroller {
+			var layerWidth;
+			var layerHeight; 
+			var basePosition; 
+			var speed;
+			var r;
+			var g;
+			var b;
+			var scrollEndX = 0;
+			var buildings = new Array();
+			
+			Scroller(width,height,base,scrollSpeed,color){
+				layerWidth = width;
+				layerHeight = height;
+				basePosition = base;
+				speed = scrollSpeed;
+				r = color[0];
+				g = color[1];
+				b = color[2];
+				
+				//create buildings to fill the width
+				currentWidth = 0;
+				while(currentWidth <= layerWidth){
+					var buildingWidth = Math.floor(Math.random() * ((layerHeight*1.5) - (layerHeight/2)+1) + (layerHeight/4));//no building should be wider than a quarter of the width or shorter than a 20th
+					var maxHeight = basePosition - layerHeight;
+					var buildingHeight = (Math.floor(Math.random() * (maxHeight - ((maxHeight/4)+1))) + (maxHeight/4));
+					buildings.push(new Building(buildingWidth,buildingHeight,[r,g,b],currentWidth,basePosition-buildingHeight));
+					currentWidth += buildingWidth;
+				}
+				scrollEndX = currentWidth;
+			}
+			
+			
+			void drawBuildings(){
+				for(var i = 0; i < buildings.length; i++){
+					buildings[i].drawBuilding();
+				}
+			}
+			
+			void moveBuildings(){
+				for(var i = 0; i < buildings.length; i++){
+					buildings[i].move(speed);
+				}
+				scrollEndX -= speed;
+				if(scrollEndX <= 800){
+					addBuilding(scrollEndX);
+				}
+			}
+			
+			void addBuilding(xLocation){
+				var buildingWidth = Math.floor(Math.random() * ((layerHeight*1.5) - (layerHeight/2)+1) + (layerHeight/4));//no building should be wider than a quarter of the width or shorter than a 20th
+				var maxHeight = basePosition - layerHeight;
+				var buildingHeight = (Math.floor(Math.random() * (maxHeight - ((maxHeight/4)+1))) + (maxHeight/4));
+				buildings.push(new Building(buildingWidth,buildingHeight,[r,g,b],xLocation,basePosition-buildingHeight));
+				scrollEndX += buildingWidth;
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
