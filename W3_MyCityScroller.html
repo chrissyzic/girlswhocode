@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<script src="processing-1.4.1.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+			var skyscraper;
+			var rectx = 0;
+			void setup(){
+			  size(600,600);
+			  background(100, 20, 100);
+			  noStroke();
+			}
+			
+			void draw(){
+				background(100, 20, 100);
+				fill(0,0,255);
+				skyscraper = new Building(rectx,500, 100, 200, [75,0,255]);
+				skyscraper.drawBuilding();
+				if(rectx==600){
+					rectx = 0;
+				}
+				else{
+					rectx = rectx+1;
+				}
+			}
+
+			class Building{
+				var x_pos;
+				var y_pos;
+				var width;
+				var height;
+				var red_val;
+				var green_val;
+				var blue_val;
+				
+				Building(x, y, w, h, color){
+					x_pos = x;
+					y_pos = y;
+					width = w;
+					height = h;
+					red_val = color[0];
+					green_val = color[1];
+					blue_val = color[2];
+				}
+				
+				void drawBuilding(){
+					fill(red_val,green_val,blue_val);
+					rect(x_pos, y_pos, width, height);
+				}
+				
+				/*void moveBuilding(){
+					var rectx = 0;
+					var draw = function(){
+						background(100, 20, 100);
+						fill(0,0,255);
+						rect(rectx, 500, 100, 200);
+						rectx = rectx+5;
+					};
+				}*/
+				
+			}
+			class Movement{
+				var buildx_pos;
+				var buildy_pos;
+				var buildwidth;
+				var buildheight;
+				var buildred;
+				var buildgreen;
+				var buildblue;
+				
+				Movement(bx,by,bw,bw,bc){
+					buildx_pos = bx;
+					buildy_pos = by;
+					buildwidth = bw;
+					buildheight = bh;
+					buildred = bc[0];
+					buildgreen = bc[1];
+					buildblue = bc[2];
+				}
+
+				void addBuilding(){
+					var buildingtoAdd;
+					var listoBuildings = [];
+					buildingtoAdd = new Building(buildx_pos, buildy_pos, buildwidth, buildheight, buildred, buildgreen,buildblue);
+					listobuildings.push(buildingtoAdd);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
