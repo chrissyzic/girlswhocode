@@ -2,25 +2,34 @@
 	<head>
 		<script src="processing-1.4.1.js"></script>
 		<script type="text/processing" data-processing-target="mycanvas">
-			var skyscraper;
+			var skyscraperFront;
+			var skyscraperMid;
+			var skyscraperBack;
 			var rectx = 0;
 			void setup(){
-			  size(600,600);
-			  background(100, 20, 100);
-			  noStroke();
+				size(600,600);
+				background(25);
+				noStroke();
+				skyscraperBack = new Movement(rectx, random(50,125), random(10,30), 600-50, [125,0,255],1);
+				skyscraperMid = new Movement(rectx, random(200,325), random(50,100), 600-200, [75,0, 255],2);
+				skyscraperFront = new Movement(rectx, random(400,550), random(125,200), 600-400, [0,0,128],3);
 			}
 			
 			void draw(){
-				background(100, 20, 100);
-				fill(0,0,255);
-				skyscraper = new Building(rectx,500, 100, 200, [75,0,255]);
-				skyscraper.drawBuilding();
-				if(rectx==600){
-					rectx = 0;
-				}
-				else{
-					rectx = rectx+1;
-				}
+				background(150);
+				skyscraperBack.addBuilding();
+				skyscraperMid.addBuilding();
+				skyscraperFront.addBuilding();
+				
+				skyscraperBack.drawBuilding();
+				skyscraperBack.moveBuilding();
+				
+				skyscraperMid.drawBuilding();
+				skyscraperMid.moveBuilding();
+				
+				skyscraperFront.drawBuilding();
+				skyscraperFront.moveBuilding();
+				
 			}
 
 			class Building{
@@ -47,16 +56,10 @@
 					rect(x_pos, y_pos, width, height);
 				}
 				
-				/*void moveBuilding(){
-					var rectx = 0;
-					var draw = function(){
-						background(100, 20, 100);
-						fill(0,0,255);
-						rect(rectx, 500, 100, 200);
-						rectx = rectx+5;
-					};
-				}*/
-				
+				void move(speed){
+						x_pos = x_pos + speed
+				}
+						
 			}
 			class Movement{
 				var buildx_pos;
@@ -66,8 +69,10 @@
 				var buildred;
 				var buildgreen;
 				var buildblue;
+				var speed;
+				var listofBuildings = new Array();
 				
-				Movement(bx,by,bw,bw,bc){
+				Movement(bx,by,bw,bh,bc,sp){
 					buildx_pos = bx;
 					buildy_pos = by;
 					buildwidth = bw;
@@ -75,13 +80,27 @@
 					buildred = bc[0];
 					buildgreen = bc[1];
 					buildblue = bc[2];
+					speed = sp;
 				}
 
 				void addBuilding(){
 					var buildingtoAdd;
-					var listoBuildings = [];
-					buildingtoAdd = new Building(buildx_pos, buildy_pos, buildwidth, buildheight, buildred, buildgreen,buildblue);
-					listobuildings.push(buildingtoAdd);
+					buildingtoAdd = new Building(buildx_pos, buildy_pos, buildwidth, buildheight, [buildred, buildgreen,buildblue]);
+					listofBuildings.push(buildingtoAdd);
+				}
+				
+				void drawBuilding(){
+					var i;
+					for (var i=0; i < listofBuildings.length; i++){
+						listofBuildings[i].drawBuilding();
+					}
+				}
+				
+				void moveBuilding(){
+					var i;
+					for (var i=0; i < listofBuildings.length; i++){
+						listofBuildings[i].move(speed);
+					}
 				}
 			}
 		</script>
