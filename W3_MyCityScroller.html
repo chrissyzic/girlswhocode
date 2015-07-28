@@ -6,6 +6,13 @@
 			var skyscraperMid;
 			var skyscraperBack;
 			var rectx = 0;
+			var testBuild;
+			var testBuild2;
+			var testBuild3;
+			var testBuild4;
+			var testBuild5;
+			var chrissyFront = new Array();
+			var chrissyMid = new Array();
 			void setup(){
 				size(600,600);
 				background(25);
@@ -13,15 +20,33 @@
 				skyscraperBack = new Movement(rectx, random(50,125), random(10,30), 600-50, [125,0,255],1);
 				skyscraperMid = new Movement(rectx, random(200,325), random(50,100), 600-200, [75,0, 255],2);
 				skyscraperFront = new Movement(rectx, random(400,550), random(125,200), 600-400, [0,0,128],3);
-			}
-			
+				testBuild = new Building(0,400, 150, 200, [0,0,128]);
+				testBuild2 = new Building(150,350, 100, 300, [0,0,128]);
+				chrissyFront = [testBuild, testBuild2];
+				testBuild3 = new Building(0, 250, 100, 350, [75,0,255]);
+				testBuild4 = new Building(100, 300, 60, 300, [75,0,255]);
+				testBuild5 = new Building(160, 310, 50, 290, [75,0,255]);
+				chrissyMid = [testBuild3, testBuild4, testBuild5];
+				/*skyscraperBack = new Movement(rectx, random(50,125), random(10,30), 600-50, [125,0,255],1);
+				skyscraperMid = new Movement(rectx, random(200,325), random(50,100), 600-200, [75,0, 255],2);
+				skyscraperFront = new Movement(rectx, random(400,550), random(125,200), 600-400, [0,0,128],3);*/
+				}
+				
 			void draw(){
 				background(150);
-				skyscraperBack.addBuilding();
-				skyscraperMid.addBuilding();
-				skyscraperFront.addBuilding();
 				
-				skyscraperBack.drawBuilding();
+				for (var i = 0; i < chrissyMid.length; i++){
+					chrissyMid[i].drawBuilding();
+					chrissyMid[i].move(1);
+				}
+					
+				for (var i = 0; i < chrissyFront.length; i++){
+					chrissyFront[i].drawBuilding();
+					chrissyFront[i].move(3);
+				}
+				
+				
+				/*skyscraperBack.drawBuilding();
 				skyscraperBack.moveBuilding();
 				
 				skyscraperMid.drawBuilding();
@@ -30,6 +55,10 @@
 				skyscraperFront.drawBuilding();
 				skyscraperFront.moveBuilding();
 				
+				skyscraperBack.addBuilding();
+				skyscraperMid.addBuilding();
+				skyscraperFront.addBuilding();*/
+							
 			}
 
 			class Building{
@@ -57,7 +86,12 @@
 				}
 				
 				void move(speed){
-						x_pos = x_pos + speed
+					if (x_pos +width < 600+width){
+						x_pos = x_pos + speed;
+					}
+					else{
+						x_pos = -width;
+					}
 				}
 						
 			}
@@ -84,13 +118,11 @@
 				}
 
 				void addBuilding(){
-					var buildingtoAdd;
-					buildingtoAdd = new Building(buildx_pos, buildy_pos, buildwidth, buildheight, [buildred, buildgreen,buildblue]);
+					var buildingtoAdd = new Building(buildx_pos, buildy_pos, buildwidth, buildheight, [buildred, buildgreen,buildblue]);
 					listofBuildings.push(buildingtoAdd);
 				}
 				
-				void drawBuilding(){
-					var i;
+				void drawBuildings(){
 					for (var i=0; i < listofBuildings.length; i++){
 						listofBuildings[i].drawBuilding();
 					}
