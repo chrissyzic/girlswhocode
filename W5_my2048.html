@@ -1,0 +1,120 @@
+<script>
+var board = [[0,0,0,0],[2,0,0,0],[2,0,0,0],[0,0,0,0]];
+var boardSize = 4;
+
+console.table(board)
+/*addTiles("up", 2, 0)
+console.table(board)
+
+addTiles("down", 1, 0)
+console.table(board)
+
+addTiles("right", 2, 0)
+console.table(board)*/
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+    e = window.event;
+
+    if (e.keyCode == '38') {
+        // up arrow
+		for (var row=1; row < boardSize; row++){
+			for (var col=0; col < boardSize; col++){
+				addTiles("up", row, col)
+			}
+		}
+		console.table(board);
+    }
+    else if (e.keyCode == '40') {
+        // down arrow
+		for(var row = 0; row < boardSize-1; row++){
+			for (var col = 0; col < boardSize; col++){
+				addTiles("down", row, col)
+			}
+		}
+		console.table(board);
+	}
+    else if (e.keyCode == '37') {
+       // left arrow
+	   for (var row = 0; row < boardSize; row++){
+			for (var col = 1; col < boardSize; col++){
+				addTiles("left", row, col)
+			}
+		}
+		console.table(board);
+    }
+    else if (e.keyCode == '39') {
+       // right arrow
+	   for (var row = 0; row < boardSize; row++){
+			for (var col = 0; col < boardSize-1; col++){
+				addTiles("right", row, col)
+			}
+		}
+		console.table(board);
+    }
+
+}
+
+//Addition of tiles with the same value
+
+function addTiles(arrow, row, col){
+	if (arrow === "left"){
+		if (board[row][col] === board[row][col-1]){
+			board[row][col-1] = 2*(board[row][col]);
+			board[row][col] = 0;
+		}
+		else if (board[row][col-1] === 0){
+			board[row][col-1] = board[row][col];
+			board[row][col] = 0;
+		}
+	}
+
+	else if (arrow === "right"){
+		if (board[row][col] === board[row][col+1]){
+			board[row][col+1] = 2*(board[row][col]);
+			board[row][col] = 0;
+		}
+		else if (board[row][col+1] === 0){
+			board[row][col+1] = board[row][col];
+			board[row][col] = 0;
+		}
+	}
+
+	else if (arrow === "up"){
+		if (board[row][col] === board[row-1][col]){
+			board[row-1][col] = 2*(board[row][col]);
+			board[row][col] = 0;
+		}
+		else if (board[row-1][col] === 0){
+			board[row-1][col] = board[row][col];
+			board[row][col] = 0;
+		}
+	}
+	
+	else if (arrow === "down"){
+		if (board[row][col] === board[row+1][col]){
+			board[row+1][col] = 2*(board[row][col]);
+			board[row][col] = 0;
+		}
+		else if (board[row+1][col] === 0){
+			board[row+1][col] = board[row][col];
+			board[row][col] = 0;
+		}
+	}
+}
+
+//Indicator of no open tiles on board space
+
+//Printing the board
+
+//Getting a tile to move one slot in any direction
+
+//Slide tiles in one row/col before attempting all rows/cols
+
+//Tile merger in 1 row/col vs. all rows/columns
+
+//Randomization for entering tile value
+
+//Movement of entering tile value
+</script>
