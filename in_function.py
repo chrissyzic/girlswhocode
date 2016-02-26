@@ -1,6 +1,4 @@
-#Take a look at the code below, what will the last two statements return and WHY? 
-#Note: this is not a pseudocode, it is actually Python. 
-#Even if you know Python try to explain why you answered the way you did based on context clues in the code presented.
+#Take a look at the code below, what will the last two statements return and why?
 
 day = "Friday"
 week = ["Monday", "Tuesday", "Wednesday", "Thursday", Friday"]
