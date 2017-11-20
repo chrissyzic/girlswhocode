@@ -1,0 +1,10 @@
+player1_choice = input("Player 1, pick rock, paper or scissors")
+player2_choice = input("Player 2, pick rock, paper or scissors")
+
+if player1_choice == "rock"
+  if player1_choice == "rock"
+    print "Tie!"
+  if player1_choice == "paper"
+    print "Player 2 wins"
+  if player1_choice == "scissors"
+    print "Player 1 wins"
